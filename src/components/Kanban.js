@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-
 
 import { columnsFromBackend } from "./KanbanData";
 import TaskCard from "./TaskCard";
@@ -12,13 +11,15 @@ import TaskCard from "./TaskCard";
 const Container = styled("div")(() => ({
   display: "flex",
   flexDirection: "row",
+  marginLeft: "50px",
+  marginTop: "20px",
 }));
 
 const TaskList = styled("div")(() => ({
   minHeight: "250px",
   display: "flex",
   flexDirection: "column",
-  background: "#f7f8fa",
+  background: "#ECECEC",
   minWidth: "390px",
   borderRadius: "5px",
   padding: "15px 15px",
@@ -41,8 +42,6 @@ const Title = styled("span")(() => ({
   borderRadius: "5px",
   padding: "15px 15px",
 }));
-
-
 
 const Kanban = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
@@ -95,22 +94,33 @@ const Kanban = () => {
               <Droppable key={index} droppableId={columnId}>
                 {(provided, snapshot) => (
                   <div>
-                    <Box sx={{ width: "100%", marginTop: "10px"}}>
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    <div
+                      style={{
+                        width: "390px",
+                        backgroundColor: "#ECECEC",
+                        padding: "5px",
+                        display: "flex",
+                        alignItems: "center",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      {column.icon}
+                      <Typography
+                        sx={{
+                          fontSize: 14,
+                          fontWeight: 800,
+                          marginLeft: "15px",
+                          marginTop: "5px",
+                        }}
+                        color="text.secondary"
+                        gutterBottom
                       >
-                        <Grid item xs={10} key={index}>
-                          <Title>{column.title}   {column.icon}</Title>
-                        
-                          
-                        </Grid>
-                        
-                      </Grid>
-                    </Box>
+                        {column.title} [{column.items.length}]
+                      </Typography>
+                    </div>
                     <br />
-                    <TaskList style={{ marginTop: "5px"  }}
+                    <TaskList
+                      style={{ marginTop: "5px" }}
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >

@@ -1,10 +1,8 @@
-import './App.css';
-import Kanban from './components/Kanban';
+import "./App.css";
+import Kanban from "./components/Kanban";
 
 function App() {
-  return (
-    <Kanban />
-  );
+  return <Kanban />;
 }
 
 export default App;

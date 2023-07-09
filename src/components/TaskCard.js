@@ -79,8 +79,8 @@ const TaskCard = ({ item, index }) => {
         >
           <StyledCard
             sx={{
-              width: "380px",
-              height: "230px",
+              width: "350px",
+              height: "210px",
               m: "8px 1px",
               padding: "10px",
               borderLeft: `solid ${getRandomColor()} 5px`,
@@ -96,8 +96,12 @@ const TaskCard = ({ item, index }) => {
               </Typography>
               <br />
               <Tooltip title={item.task}>
-                <Typography sx={{ fontSize: 14 }} color="black" gutterBottom>
-                  {item.task.substring(0, 80) + "..."}
+                <Typography
+                  sx={{ fontSize: 14, cursor: "default" }}
+                  color="black"
+                  gutterBottom
+                >
+                  {item.task.substring(0, 60) + "..."}
                 </Typography>
               </Tooltip>
 
