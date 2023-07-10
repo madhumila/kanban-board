@@ -24,14 +24,17 @@ const TaskList = styled("div")(() => ({
   borderRadius: "5px",
   padding: "15px 15px",
   marginRight: "45px",
+  
 }));
 
 const TaskColumnStyles = styled("div")(() => ({
   margin: "8px",
   display: "flex",
   width: "100%",
-  minHeight: "80vh",
+  height: "90vh",
+  overflowY: "scroll",
 }));
+
 const Title = styled("span")(() => ({
   fontWeight: "bold",
   color: "#333333",
