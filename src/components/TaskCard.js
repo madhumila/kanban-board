@@ -11,57 +11,10 @@ import { Draggable } from "react-beautiful-dnd";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { styled } from "@mui/system";
 import Tooltip from "@mui/material/Tooltip";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
-const Title = styled("div")(() => ({
-  marginBottom: "1.5px",
-  color: "#666666",
-}));
-
-const SubTitle = styled("span")(() => ({
-  marginBottom: "1.5px",
-  color: "#333333",
-  fontWeight: "bold",
-}));
-const Heading = styled("div")(() => ({
-  color: "#333333",
-  fontWeight: "bold",
-  fontSize: "16px",
-}));
-
-const rightIconAction = (
-  <>
-    <Badge
-      badgeContent={4}
-      color="error"
-      sx={{
-        "& .MuiBadge-badge": {
-          right: "1.8px",
-          top: "0.5px",
-        },
-      }}
-    >
-      <NotificationsNoneIcon color="action" />
-    </Badge>
-    <IconButton>
-      <MoreVertIcon />
-    </IconButton>
-  </>
-);
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  borderLeft: `4px solid ${theme.palette.primary}`,
-  margin: theme.spacing(2),
-}));
-
-const getRandomColor = () => {
-  const red = Math.floor(Math.random() * 256);
-  const green = Math.floor(Math.random() * 256);
-  const blue = Math.floor(Math.random() * 256);
-  return `rgb(${red}, ${green}, ${blue})`;
-};
 
 const TaskCard = ({ item, index }) => {
   return (
@@ -72,53 +25,73 @@ const TaskCard = ({ item, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <StyledCard
+          <Card
             sx={{
               width: "350px",
-              height: "210px",
-              m: "8px 1px",
-              padding: "10px",
-              borderLeft: "solid yellow 5px",
+              height: "auto",
+              marginTop: "8px",
+              marginBottom: "8px",
+              borderLeft: `solid #FFD400 5px`,
+              borderRadius: "15px"
             }}
           >
-            <CardContent sx={{ p: "0 16px" }}>
+            <CardContent sx={{ }}>
               <Typography
-                sx={{ fontSize: 14, fontWeight: 800 }}
+                sx={{ fontSize: 20, fontWeight: 800 }}
                 color="text.secondary"
                 gutterBottom
               >
-                {/* {item.ticket} */}
-                <div>{item.assignee}</div>
+                {item.assigned_by}
               </Typography>
-              <br />
               <Tooltip title={item.task}>
                 <Typography
-                  sx={{ fontSize: 14, cursor: "default" }}
-                  color="black"
+                  sx={{ fontSize: 18, fontWeight: 500, cursor: "default" }}
+                  color="text.secondary"
                   gutterBottom
                 >
-                  {item.task?.length > 60
-                    ? item.task.substring(0, 60) + " ..."
+                  {item.task?.length > 30
+                    ? item.task.substring(0, 30) + " ..."
                     : item.task}
                 </Typography>
               </Tooltip>
+              <Typography
+                sx={{ fontSize: 14, cursor: "default" }}
+                color="text.secondary"
+                gutterBottom
+              >
+                {item.source}
+              </Typography>
 
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  // alignItems: "center",
-                  // marginTop: "50px",
-                  paddingBottom:"10px"
+                  alignItems: "center",
+                  width: "100%",
+                  marginTop: "15px"
                 }}
               >
-                {item.date}
-
-               <p style={{marginLeft:"90px",}}>{item.assigned_to}</p> 
-                <RemoveRedEyeIcon fontSize="small" />
+                <Typography
+                  sx={{ fontSize: 16, fontWeight: 400 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {item.date}
+                </Typography>
+                <div className=" flex flex-row justify-between w-1/2">
+                <Typography
+                  sx={{ fontSize: 16, fontWeight: 400 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {item.assigned_to}
+                </Typography>
+                <RemoveRedEyeIcon color="disabled" />
+                </div>
+                
               </div>
             </CardContent>
-          </StyledCard>
+          </Card>
         </div>
       )}
     </Draggable>

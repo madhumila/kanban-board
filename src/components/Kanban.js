@@ -15,6 +15,8 @@ const Container = styled("div")(() => ({
   flexDirection: "row",
   marginLeft: "50px",
   marginTop: "20px",
+  height: "90vh",
+  overflow: "hidden",
 }));
 
 const TaskList = styled("div")(() => ({
@@ -80,7 +82,7 @@ const Kanban = () => {
       ),
     },
     column3: {
-      title: "client",
+      title: "Client",
       items: [],
       icon: (
         <PreviewIcon
@@ -132,10 +134,11 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_by: item?.lead_reg_id?.reg_name,
+              source: item?.crm?.category[0]?.name,
+              date: item?.date,
               priority: "High",
-              date: item.date,
-              assignee: item?.lead_reg_id ? item.lead_reg_id.reg_name  : null,
             });
           });
         } else if (data.items && data.name === "Rejected") {
@@ -148,12 +151,10 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby
-                ? item.addedby.firstName
-                : item?.followup?.addedby[0]?.firstName
-                ? item.followup.addedby[0].firstName
-                : null,
-              assignee: item?.lead_reg_id ? item.lead_reg_id.reg_name : null,
+              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_by: item?.lead_reg_id?.reg_name,
+              source: item?.lead_source?.name,
+              date: item?.date,
               priority: "Medium",
             });
           });
@@ -167,7 +168,10 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_by: item?.lead_reg_id?.reg_name,
+              source: item?.lead_source?.name,
+              date: item?.date,
               priority: "Low",
             });
           });
@@ -181,7 +185,10 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_by: item?.lead_reg_id?.reg_name,
+              source: item?.lead_source?.name,
+              date: item?.date,
               priority: "High",
             });
           });
@@ -195,7 +202,10 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_by: item?.lead_reg_id?.reg_name,
+              source: item?.lead_source?.name,
+              date: item?.date,
               priority: "High",
             });
           });
@@ -209,7 +219,10 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_by: item?.lead_reg_id?.reg_name,
+              source: item?.lead_source?.name,
+              date: item?.date,
               priority: "Medium",
             });
           });
@@ -222,17 +235,16 @@ const Kanban = () => {
         setRequirementData(requirementDataTemp);
       });
   };
-  console.log(newData);
-  console.log(rejectedData);
+
   const updateColumns = () => {
     const updatedColumns = { ...columns };
-    updatedColumns.column1.items = newData.concat(requirementData);
-    updatedColumns.column2.items = proposalData;
+    updatedColumns.column1.items = newData;
+    updatedColumns.column2.items = proposalData.concat(requirementData);
     updatedColumns.column3.items = clientData;
     updatedColumns.column4.items = rejectedData.concat(canceledData);
     setColumns(updatedColumns);
   };
-  console.log(columns);
+
   useEffect(() => {
     fetchInfo();
   }, []);
@@ -312,6 +324,7 @@ const Kanban = () => {
                         display: "flex",
                         alignItems: "center",
                         borderRadius: "5px",
+                        position: "fixed"
                       }}
                     >
                       {column.icon}
@@ -330,7 +343,7 @@ const Kanban = () => {
                     </div>
                     <br />
                     <TaskList
-                      style={{ marginTop: "5px" }}
+                      style={{ marginTop: "30px" }}
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >
