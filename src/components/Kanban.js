@@ -58,7 +58,7 @@ const Kanban = () => {
 
   const [columns, setColumns] = useState({
     column1: {
-      title: "New",
+      title: "Todo",
       items: [],
       icon: (
         <ListAltIcon
@@ -69,7 +69,7 @@ const Kanban = () => {
       ),
     },
     column2: {
-      title: "Proposal/Requirement",
+      title: "In Progress",
       items: [],
       icon: (
         <HourglassBottomIcon
@@ -80,7 +80,7 @@ const Kanban = () => {
       ),
     },
     column3: {
-      title: "Rejected/Canceled",
+      title: "In Review",
       items: [],
       icon: (
         <PreviewIcon
@@ -91,7 +91,7 @@ const Kanban = () => {
       ),
     },
     column4: {
-      title: "Done/Clients",
+      title: "Done",
       items: [],
       icon: (
         <LibraryAddCheckIcon
@@ -103,7 +103,7 @@ const Kanban = () => {
     },
   });
 
-  const url = "https://crmapi.srvinfotech.com/newleads/list/kanban";
+  const url = "https://crmapi.srvinfotech.com/newleads/list/kanban?followup_status=6392cbeb2d917dfcd065310b,62c7d6597333e58969b3de08";
 
   const fetchInfo = () => {
     axios.get(url).then((response) => {
@@ -135,49 +135,52 @@ const Kanban = () => {
               priority: "High",
             });
           });
-        } else if (data.items && data.name === "Rejected") {
-          data.items.map((item) => {
-            rejectedDataTemp.push({
-              id: item._id,
-              status: "Rejected",
-              task:
-                item?.crm?.comment &&
-                `${(item?.crm?.comment).trim()}. ${
-                  item?.crm?.companyname ? item.crm.companyname : ""
-                }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : null,
-              priority: "Medium",
-            });
-          });
-        } else if (data.items && data.name === "Cancelled") {
-          data.items.map((item) => {
-            canceledDataTemp.push({
-              id: item._id,
-              status: "Canceled",
-              task:
-                item?.crm?.comment &&
-                `${(item?.crm?.comment).trim()}. ${
-                  item?.crm?.companyname ? item.crm.companyname : ""
-                }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : null,
-              priority: "Low",
-            });
-          });
-        } else if (data.items && data.name === "Client") {
-          data.items.map((item) => {
-            clientDataTemp.push({
-              id: item._id,
-              status: "Client",
-              task:
-                item?.crm?.comment &&
-                `${(item?.crm?.comment).trim()}. ${
-                  item?.crm?.companyname ? item.crm.companyname : ""
-                }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : null,
-              priority: "High",
-            });
-          });
-        } else if (data.items && data.name === "Proposal") {
+        } 
+        // else if (data.items && data.name === "Rejected") {
+        //   data.items.map((item) => {
+        //     rejectedDataTemp.push({
+        //       id: item._id,
+        //       status: "Rejected",
+        //       task:
+        //         item?.crm?.comment &&
+        //         `${(item?.crm?.comment).trim()}. ${
+        //           item?.crm?.companyname ? item.crm.companyname : ""
+        //         }`,
+        //       assigned_to: item?.addedby ? item.addedby.firstName : null,
+        //       priority: "Medium",
+        //     });
+        //   });
+        // } 
+        // else if (data.items && data.name === "Cancelled") {
+        //   data.items.map((item) => {
+        //     canceledDataTemp.push({
+        //       id: item._id,
+        //       status: "Canceled",
+        //       task:
+        //         item?.crm?.comment &&
+        //         `${(item?.crm?.comment).trim()}. ${
+        //           item?.crm?.companyname ? item.crm.companyname : ""
+        //         }`,
+        //       assigned_to: item?.addedby ? item.addedby.firstName : null,
+        //       priority: "Low",
+        //     });
+        //   });
+        // } else if (data.items && data.name === "Client") {
+        //   data.items.map((item) => {
+        //     clientDataTemp.push({
+        //       id: item._id,
+        //       status: "Client",
+        //       task:
+        //         item?.crm?.comment &&
+        //         `${(item?.crm?.comment).trim()}. ${
+        //           item?.crm?.companyname ? item.crm.companyname : ""
+        //         }`,
+        //       assigned_to: item?.addedby ? item.addedby.firstName : null,
+        //       priority: "High",
+        //     });
+        //   });
+        // } 
+        else if (data.items && data.name === "Proposal") {
           data.items.map((item) => {
             proposalDataTemp.push({
               id: item._id,
@@ -214,16 +217,18 @@ const Kanban = () => {
         setRequirementData(requirementDataTemp);
       });
   };
-
+console.log(newData);
+console.log(rejectedData);
   const updateColumns = () => {
     const updatedColumns = { ...columns };
     updatedColumns.column1.items = newData;
     updatedColumns.column2.items = proposalData.concat(requirementData);
-    updatedColumns.column3.items = rejectedData.concat(canceledData);
+    
+    updatedColumns.column3.items = rejectedData;
     updatedColumns.column4.items = clientData;
     setColumns(updatedColumns);
   };
-
+console.log(columns);
   useEffect(() => {
     fetchInfo();
   }, []);
