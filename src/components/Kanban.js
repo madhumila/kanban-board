@@ -328,6 +328,7 @@ const Kanban = () => {
                       }}
                     >
                       {column.icon}
+                      <div style={{ width: "90%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <Typography
                         sx={{
                           fontSize: 14,
@@ -338,8 +339,21 @@ const Kanban = () => {
                         color="text.secondary"
                         gutterBottom
                       >
-                        {column.title} [{column.items.length}]
+                        {column.title} 
                       </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: 14,
+                          fontWeight: 800,
+                          marginLeft: "15px",
+                          marginTop: "5px",
+                        }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                       {column.items.length}
+                      </Typography>
+                      </div>
                     </div>
                     <br />
                     <TaskList
