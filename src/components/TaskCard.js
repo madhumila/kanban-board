@@ -13,6 +13,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import { styled } from "@mui/system";
 import Tooltip from "@mui/material/Tooltip";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const Title = styled("div")(() => ({
   marginBottom: "1.5px",
@@ -77,7 +78,7 @@ const TaskCard = ({ item, index }) => {
               height: "210px",
               m: "8px 1px",
               padding: "10px",
-              borderLeft: `solid ${getRandomColor()} 5px`,
+              borderLeft: "solid yellow 5px",
             }}
           >
             <CardContent sx={{ p: "0 16px" }}>
@@ -86,7 +87,8 @@ const TaskCard = ({ item, index }) => {
                 color="text.secondary"
                 gutterBottom
               >
-                {item.ticket}
+                {/* {item.ticket} */}
+                <div>{item.assignee}</div>
               </Typography>
               <br />
               <Tooltip title={item.task}>
@@ -105,45 +107,15 @@ const TaskCard = ({ item, index }) => {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center",
-                  marginTop: "50px",
+                  // alignItems: "center",
+                  // marginTop: "50px",
+                  paddingBottom:"10px"
                 }}
               >
-                <span style={{ display: "flex", justifyContent: "" }}>
-                  <PriorityHighIcon
-                    style={{
-                      backgroundColor:
-                        item.priority === "High"
-                          ? "red"
-                          : item.priority === "Medium"
-                          ? "orange"
-                          : "lightgreen",
-                      color: "#ffffff",
-                    }}
-                  />
+                {item.date}
 
-                  <Typography
-                    sx={{ fontSize: 14, fontWeight: 800, marginLeft: "10px" }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {item.priority}
-                  </Typography>
-                </span>
-                <Tooltip title={item.assigned_to}>
-                  <Avatar
-                    sx={{
-                      bgcolor: `${getRandomColor()}`,
-                      color: "white",
-                      cursor: "default",
-                    }}
-                    aria-label="recipe"
-                  >
-                    {item.assigned_to
-                      ? item.assigned_to.charAt(0).toUpperCase()
-                      : "NA"}
-                  </Avatar>
-                </Tooltip>
+               <p style={{marginLeft:"90px",}}>{item.assigned_to}</p> 
+                <RemoveRedEyeIcon fontSize="small" />
               </div>
             </CardContent>
           </StyledCard>
