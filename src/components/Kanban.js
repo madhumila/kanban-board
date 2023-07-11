@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { Grid, Box, Typography } from "@mui/material";
-import Divider from "@mui/material/Divider";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { Typography } from "@mui/material";
+import axios from "axios";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import PreviewIcon from "@mui/icons-material/Preview";
+import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 
-import { columnsFromBackend } from "./KanbanData";
 import TaskCard from "./TaskCard";
 
 const Container = styled("div")(() => ({
@@ -24,7 +26,6 @@ const TaskList = styled("div")(() => ({
   borderRadius: "5px",
   padding: "15px 15px",
   marginRight: "45px",
-  
 }));
 
 const TaskColumnStyles = styled("div")(() => ({
@@ -47,7 +48,203 @@ const Title = styled("span")(() => ({
 }));
 
 const Kanban = () => {
-  const [columns, setColumns] = useState(columnsFromBackend);
+  const [enquiryData, setEnquiryData] = useState([]);
+  const [newData, setNewData] = useState([]);
+  const [canceledData, setCanceledData] = useState([]);
+  const [clientData, setClientData] = useState([]);
+  const [proposalData, setProposalData] = useState([]);
+  const [requirementData, setRequirementData] = useState([]);
+  const [rejectedData, setRejectedData] = useState([]);
+
+  const [columns, setColumns] = useState({
+    column1: {
+      title: "New",
+      items: [],
+      icon: (
+        <ListAltIcon
+          style={{
+            color: "blue",
+          }}
+        />
+      ),
+    },
+    column2: {
+      title: "Proposal/Requirement",
+      items: [],
+      icon: (
+        <HourglassBottomIcon
+          style={{
+            color: "#ffbf00",
+          }}
+        />
+      ),
+    },
+    column3: {
+      title: "Rejected/Canceled",
+      items: [],
+      icon: (
+        <PreviewIcon
+          style={{
+            color: "#800080",
+          }}
+        />
+      ),
+    },
+    column4: {
+      title: "Done/Clients",
+      items: [],
+      icon: (
+        <LibraryAddCheckIcon
+          style={{
+            color: "#32CD32",
+          }}
+        />
+      ),
+    },
+  });
+
+  const url = "https://crmapi.srvinfotech.com/newleads/list/kanban";
+
+  const fetchInfo = () => {
+    axios.get(url).then((response) => {
+      setEnquiryData(response.data.data);
+    });
+  };
+
+  const getData = () => {
+    let newDataTemp = [];
+    let rejectedDataTemp = [];
+    let canceledDataTemp = [];
+    let clientDataTemp = [];
+    let proposalDataTemp = [];
+    let requirementDataTemp = [];
+
+    enquiryData &&
+      enquiryData.map((data) => {
+        if (data.items && data.name === "New") {
+          data.items.map((item) => {
+            newDataTemp.push({
+              id: item._id,
+              status: "New",
+              task:
+                item?.crm?.comment &&
+                `${(item?.crm?.comment).trim()}. ${
+                  item?.crm?.companyname ? item.crm.companyname : ""
+                }`,
+              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              priority: "High",
+            });
+          });
+        } else if (data.items && data.name === "Rejected") {
+          data.items.map((item) => {
+            rejectedDataTemp.push({
+              id: item._id,
+              status: "Rejected",
+              task:
+                item?.crm?.comment &&
+                `${(item?.crm?.comment).trim()}. ${
+                  item?.crm?.companyname ? item.crm.companyname : ""
+                }`,
+              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              priority: "Medium",
+            });
+          });
+        } else if (data.items && data.name === "Cancelled") {
+          data.items.map((item) => {
+            canceledDataTemp.push({
+              id: item._id,
+              status: "Canceled",
+              task:
+                item?.crm?.comment &&
+                `${(item?.crm?.comment).trim()}. ${
+                  item?.crm?.companyname ? item.crm.companyname : ""
+                }`,
+              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              priority: "Low",
+            });
+          });
+        } else if (data.items && data.name === "Client") {
+          data.items.map((item) => {
+            clientDataTemp.push({
+              id: item._id,
+              status: "Client",
+              task:
+                item?.crm?.comment &&
+                `${(item?.crm?.comment).trim()}. ${
+                  item?.crm?.companyname ? item.crm.companyname : ""
+                }`,
+              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              priority: "High",
+            });
+          });
+        } else if (data.items && data.name === "Proposal") {
+          data.items.map((item) => {
+            proposalDataTemp.push({
+              id: item._id,
+              status: "Proposal",
+              task:
+                item?.crm?.comment &&
+                `${(item?.crm?.comment).trim()}. ${
+                  item?.crm?.companyname ? item.crm.companyname : ""
+                }`,
+              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              priority: "High",
+            });
+          });
+        } else if (data.items && data.name === "Requirement Collection") {
+          data.items.map((item) => {
+            requirementDataTemp.push({
+              id: item._id,
+              status: "Requirement",
+              task:
+                item?.crm?.comment &&
+                `${(item?.crm?.comment).trim()}. ${
+                  item?.crm?.companyname ? item.crm.companyname : ""
+                }`,
+              assigned_to: item?.addedby ? item.addedby.firstName : null,
+              priority: "Medium",
+            });
+          });
+        }
+        setNewData(newDataTemp);
+        setRejectedData(rejectedDataTemp);
+        setCanceledData(canceledDataTemp);
+        setClientData(clientDataTemp);
+        setProposalData(proposalDataTemp);
+        setRequirementData(requirementDataTemp);
+      });
+  };
+
+  const updateColumns = () => {
+    const updatedColumns = { ...columns };
+    updatedColumns.column1.items = newData;
+    updatedColumns.column2.items = proposalData.concat(requirementData);
+    updatedColumns.column3.items = rejectedData.concat(canceledData);
+    updatedColumns.column4.items = clientData;
+    setColumns(updatedColumns);
+  };
+
+  useEffect(() => {
+    fetchInfo();
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [enquiryData]);
+
+  useEffect(() => {
+    updateColumns();
+  }, [
+    newData,
+    proposalData,
+    requirementData,
+    rejectedData,
+    canceledData,
+    clientData,
+  ]);
+
+  console.log("columns", columns);
+  console.log("enquiryData", enquiryData);
 
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
@@ -84,6 +281,7 @@ const Kanban = () => {
       });
     }
   };
+
   return (
     <DragDropContext
       onDragEnd={(result) => {
@@ -127,9 +325,12 @@ const Kanban = () => {
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >
-                      {column.items.map((item, index) => (
-                        <TaskCard key={index} item={item} index={index} />
-                      ))}
+                      {column.items.map(
+                        (item, index) =>
+                          item.task && (
+                            <TaskCard key={index} item={item} index={index} />
+                          )
+                      )}
                       {provided.placeholder}
                     </TaskList>
                   </div>

@@ -1,16 +1,10 @@
 import * as React from "react";
 import {
-  Box,
   Card,
-  CardHeader,
-  CardFooter,
-  Grid,
-  Chip,
   Badge,
   IconButton,
   Typography,
   CardContent,
-  CardActions,
   Avatar,
 } from "@mui/material";
 import { Draggable } from "react-beautiful-dnd";
@@ -101,7 +95,9 @@ const TaskCard = ({ item, index }) => {
                   color="black"
                   gutterBottom
                 >
-                  {item.task.substring(0, 60) + "..."}
+                  {item.task?.length > 60
+                    ? item.task.substring(0, 60) + " ..."
+                    : item.task}
                 </Typography>
               </Tooltip>
 
@@ -134,7 +130,7 @@ const TaskCard = ({ item, index }) => {
                     {item.priority}
                   </Typography>
                 </span>
-                <Tooltip title={item.assigned_To}>
+                <Tooltip title={item.assigned_to}>
                   <Avatar
                     sx={{
                       bgcolor: `${getRandomColor()}`,
@@ -143,7 +139,9 @@ const TaskCard = ({ item, index }) => {
                     }}
                     aria-label="recipe"
                   >
-                    {item.assigned_To.charAt(0).toUpperCase()}
+                    {item.assigned_to
+                      ? item.assigned_to.charAt(0).toUpperCase()
+                      : "NA"}
                   </Avatar>
                 </Tooltip>
               </div>
