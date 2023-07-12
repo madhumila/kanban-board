@@ -14,9 +14,8 @@ const Container = styled("div")(() => ({
   display: "flex",
   flexDirection: "row",
   marginLeft: "50px",
-  marginTop: "20px",
-  height: "90vh",
-  overflow: "hidden",
+  marginTop: "40px",
+  height: "100vh",
 }));
 
 const TaskList = styled("div")(() => ({
@@ -34,7 +33,7 @@ const TaskColumnStyles = styled("div")(() => ({
   margin: "8px",
   display: "flex",
   width: "100%",
-  height: "90vh",
+  height: "100vh",
   overflowY: "scroll",
 }));
 
@@ -106,7 +105,7 @@ const Kanban = () => {
   });
 
   const url =
-    "https://crmapi.srvinfotech.com/newleads/list/kanban?followup_status=6392cbeb2d917dfcd065310b,62c7d6597333e58969b3de08";
+    "https://crmapi.srvinfotech.com/newleads/list/kanban?followup_status=62c7d7427333e58969b3de0d,62c7d7287333e58969b3de0c,6392cbeb2d917dfcd065310b,62c7d6597333e58969b3de08,62c7d7117333e58969b3de0b,6392cbc22d917dfcd0653108";
 
   const fetchInfo = () => {
     axios.get(url).then((response) => {
@@ -134,7 +133,11 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_to: item?.addedby
+                ? item.addedby.firstName
+                : item?.followup?.addedby[0]?.firstName
+                ? item.followup.addedby[0].firstName
+                : null,
               assigned_by: item?.lead_reg_id?.reg_name,
               source: item?.crm?.category[0]?.name,
               date: item?.date,
@@ -151,7 +154,11 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_to: item?.addedby
+                ? item.addedby.firstName
+                : item?.followup?.addedby[0]?.firstName
+                ? item.followup.addedby[0].firstName
+                : null,
               assigned_by: item?.lead_reg_id?.reg_name,
               source: item?.lead_source?.name,
               date: item?.date,
@@ -168,7 +175,11 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_to: item?.addedby
+                ? item.addedby.firstName
+                : item?.followup?.addedby[0]?.firstName
+                ? item.followup.addedby[0].firstName
+                : null,
               assigned_by: item?.lead_reg_id?.reg_name,
               source: item?.lead_source?.name,
               date: item?.date,
@@ -185,7 +196,11 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_to: item?.addedby
+                ? item.addedby.firstName
+                : item?.followup?.addedby[0]?.firstName
+                ? item.followup.addedby[0].firstName
+                : null,
               assigned_by: item?.lead_reg_id?.reg_name,
               source: item?.lead_source?.name,
               date: item?.date,
@@ -202,7 +217,11 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_to: item?.addedby
+                ? item.addedby.firstName
+                : item?.followup?.addedby[0]?.firstName
+                ? item.followup.addedby[0].firstName
+                : null,
               assigned_by: item?.lead_reg_id?.reg_name,
               source: item?.lead_source?.name,
               date: item?.date,
@@ -219,7 +238,11 @@ const Kanban = () => {
                 `${(item?.crm?.comment).trim()}. ${
                   item?.crm?.companyname ? item.crm.companyname : ""
                 }`,
-              assigned_to: item?.addedby ? item.addedby.firstName : item?.followup?.addedby[0]?.firstName? item.followup.addedby[0].firstName : null,
+              assigned_to: item?.addedby
+                ? item.addedby.firstName
+                : item?.followup?.addedby[0]?.firstName
+                ? item.followup.addedby[0].firstName
+                : null,
               assigned_by: item?.lead_reg_id?.reg_name,
               source: item?.lead_source?.name,
               date: item?.date,
@@ -315,7 +338,7 @@ const Kanban = () => {
             return (
               <Droppable key={index} droppableId={columnId}>
                 {(provided, snapshot) => (
-                  <div>
+                  <div style={{ height: "90vh", overflow: "auto" }}>
                     <div
                       style={{
                         width: "390px",
@@ -324,40 +347,47 @@ const Kanban = () => {
                         display: "flex",
                         alignItems: "center",
                         borderRadius: "5px",
-                        position: "fixed"
+                        position: "fixed",
                       }}
                     >
                       {column.icon}
-                      <div style={{ width: "90%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <Typography
-                        sx={{
-                          fontSize: 14,
-                          fontWeight: 800,
-                          marginLeft: "15px",
-                          marginTop: "5px",
+                      <div
+                        style={{
+                          width: "90%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
                         }}
-                        color="text.secondary"
-                        gutterBottom
                       >
-                        {column.title} 
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: 14,
-                          fontWeight: 800,
-                          marginLeft: "15px",
-                          marginTop: "5px",
-                        }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
-                       {column.items.length}
-                      </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: 14,
+                            fontWeight: 800,
+                            marginLeft: "15px",
+                            marginTop: "5px",
+                          }}
+                          color="text.secondary"
+                          gutterBottom
+                        >
+                          {column.title}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: 14,
+                            fontWeight: 800,
+                            marginLeft: "15px",
+                            marginTop: "5px",
+                          }}
+                          color="text.secondary"
+                          gutterBottom
+                        >
+                          {column.items.length}
+                        </Typography>
                       </div>
                     </div>
                     <br />
                     <TaskList
-                      style={{ marginTop: "30px" }}
+                      style={{ marginTop: "30px", overflow: "hidden" }}
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >
