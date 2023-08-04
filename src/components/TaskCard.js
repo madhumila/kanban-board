@@ -19,7 +19,7 @@ const TaskCard = ({ item, index }) => {
         >
           <Card
             sx={{
-              width: "350px",
+              width: "300px",
               height: "auto",
               marginTop: "8px",
               marginBottom: "8px",

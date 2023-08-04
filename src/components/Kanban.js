@@ -104,13 +104,224 @@ const Kanban = () => {
     },
   });
 
-  const url =
-    "https://crmapi.srvinfotech.com/newleads/list/kanban?followup_status=62c7d7427333e58969b3de0d,62c7d7287333e58969b3de0c,6392cbeb2d917dfcd065310b,62c7d6597333e58969b3de08,62c7d7117333e58969b3de0b,6392cbc22d917dfcd0653108";
+  const dummyData = {
+    status: 200,
+    data: [
+      {
+        _id: "62c7d6597333e58969b3de08",
+        name: "New",
+        items: [
+          {
+            _id: "64cb9ae2c38090966021ed28",
+            date: "2023-08-03",
+            time: "17:47:38",
+            lead_reg_id: {
+              _id: "648aead9fcd76e3a23221b46",
+              reg_name: "Paul",
+              reg_email: "info@gmail.org",
+            },
+            followup: {
+              followup_status: [],
+            },
+            lead_ref_form_id: [],
+            crm: {
+              category: [
+                {
+                  _id: "63285f08c90196914f63b57f",
+                  name: "Web Design & Development",
+                  type: "Services",
+                },
+              ],
+              
+              comment: "Already send them the Proposal.",
+            },
+            lead_source: {
+              _id: "635f9a4c90d9db5776c2e52c",
+              name: "Client",
+            },
+            addedby: {
+              _id: "6368f83bed6b19dfe6e994e3",
+              firstName: "John",
+              lastName: "M",
+            },
+          },
+          {
+            _id: "6475f49e58551ed56ade72c8",
+            date: "2023-08-01",
+            time: "16:20:33",
+            lead_reg_id: {
+              _id: "6475f49e58551ed56ade72c4",
+              reg_name: "Anil P",
+            },
+            followup: {
+              status: 0,
+              _id: "64c8e379c3809096601fdc50",
+              ip: "2409:4042:4e0a:2a4d:fcf4:7bcd:d6:78f4",
+              addedby: {
+                _id: "635fa39b90d9db5776c2e811",
+                firstName: "Vijitha ",
+                lastName: "K",
+                username: "viji",
+              },
+              date: "2023-08-01",
+              time: "16:20:33",
+              followup_status: [
+                {
+                  _id: "62c7d6597333e58969b3de08",
+                  name: "New",
+                  color: "#00ccff",
+                },
+              ],
+              comments:
+                'Vijith  "Requirement Collection" status changed to "New"',
+            },
+            lead_ref_form_id: [],
+            crm: {
+              category: [
+                {
+                  _id: "63285f08c90196914f63b57f",
+                  name: "Web Design & Development",
+                  type: "Services",
+                },
+              ],
+              country: 101,
+              website: "Hotel website",
+              address: "Taliparamba",
+            },
+            addedby: {
+              _id: "635fb1a990d9db5776c2ebea",
+              firstName: "Rinsha",
+              lastName: " T K ",
+            },
+            latest_followp_status: {
+              _id: "62c7d6597333e58969b3de08",
+              name: "New",
+              color: "#00ccff",
+              order: 1,
+            },
+          },
+          {
+            _id: "64b24e97c38090966016a945",
+            date: "2023-07-15",
+            time: "13:15:27",
+            lead_reg_id: {
+              _id: "64b24e97c38090966016a941",
+              reg_name: "Neeraja",
+              reg_email: "neeraj@gmail.com",
+            },
+            followup: {
+              followup_status: [],
+            },
+            lead_ref_form_id: [],
+            crm: {
+              category: [
+                {
+                  _id: "6427f988f20e46947c06f696",
+                  name: "Creatives",
+                  type: "Services",
+                },
+              ],
+             
+            },
+            addedby: {
+              _id: "6368f83bed6b19dfe6e994e3",
+              firstName: "Aiswarya",
+              lastName: "M",
+            },
+          },
+          {
+            _id: "64afae0453629975382d44f7",
+            date: "2023-07-13",
+            time: "13:25:48",
+            lead_reg_id: {
+              _id: "64afae0453629975382d44f3",
+              reg_name: "Biji",
+            },
+            followup: {
+              followup_status: [],
+            },
+            lead_ref_form_id: [],
+            crm: {
+              category: [
+                {
+                  _id: "63285f08c90196914f63b57f",
+                  name: "Web Design & Development",
+                  type: "Services",
+                },
+              ],
+             
+              comment:
+                "Paid old age home \nsuggested by Sunny (secretary susthira)",
+            },
+            addedby: {
+              _id: "6368f83bed6b19dfe6e994e3",
+              firstName: "Joseph",
+              lastName: "T",
+            },
+          },
+          {
+            _id: "64aea32953629975382cb246",
+            date: "2023-07-12",
+            time: "18:27:13",
+            lead_reg_id: {
+              _id: "64aea32953629975382cb242",
+              reg_name: "Jassira",
+              reg_email: "jassira@gmail.com",
+            },
+            followup: {
+              followup_status: [],
+            },
+            lead_ref_form_id: [],
+            crm: {
+              category: [
+                {
+                  _id: "636f5e50660a442b95866216",
+                  name: "Mobile App",
+                  type: "Product",
+                },
+              ],
+              country: 101,
+              comment:
+                "Mobile App Requirement\nTMM Traders\nProducts2 brandsfood items40 products\ncategorybrand\nshop 1000 shopssales addreceiptordersorders to sale optiondelivery updatereturnstockpurchase addsuppliers",
+             
+            },
+            addedby: {
+              _id: "6368f83bed6b19dfe6e994e3",
+              firstName: "Aiswarya",
+              lastName: "M",
+            },
+          },
+          {
+            _id: "64ae9c6c53629975382cada7",
+            date: "2023-07-12",
+            time: "17:58:28",
+            lead_reg_id: {
+              _id: "645dd92558551ed56ac98466",
+              reg_name: "Mohith",
+              reg_email: "mohit1@gmail.com",
+            },
+            followup: {
+              followup_status: [],
+            },
+            lead_ref_form_id: [],
+            crm: {
+              category: [],
+            },
+            lead_source: {
+              _id: "635f9a0690d9db5776c2e4ff",
+              name: "Website",
+            },
+            addedby: {
+              firstName: "Web",
+            },
+          },
+        ],
+      },
+    ],
+  };
 
   const fetchInfo = () => {
-    axios.get(url).then((response) => {
-      setEnquiryData(response.data.data);
-    });
+      setEnquiryData(dummyData.data);
   };
 
   const getData = () => {
@@ -343,7 +554,7 @@ const Kanban = () => {
                       style={{
                         width: "390px",
                         backgroundColor: "#ECECEC",
-                        padding: "5px",
+                        padding: "15px",
                         display: "flex",
                         alignItems: "center",
                         borderRadius: "5px",
